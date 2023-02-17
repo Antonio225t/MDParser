@@ -1,0 +1,38 @@
+div.toc {
+    position:fixed;
+    left:-18%;
+    right:78%;
+    background-color:#cccccc;
+    border-color:blue;
+    border-style:solid;
+    border-radius:15px;
+    padding-right:10px;
+    max-height:86%;
+    overflow:hidden scroll
+}
+  
+div.container, div.toc {
+    margin-left:20%;
+    margin-right:5%;
+}
+  
+div.container {
+    margin-top:50px;
+    margin-bottom:50px;
+    background-color:#fff;
+    border-color:orange;
+    border-style:solid;
+    border-radius:15px;
+    padding:10px;
+}
+  
+div.container {
+    margin-left:20%;
+    margin-right:20%;
+    padding-top:20px;
+    padding-bottom:27px;
+}
+
+.cblock {
+    border-radius: 1.5px;
+}

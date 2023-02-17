@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Markdown online</title>
+        <style>
+        div.toc {
+            position:fixed;
+            left:-18%;
+            right:78%;
+            background-color:#cccccc;
+            border-color:blue;
+            border-style:solid;
+            border-radius:15px;
+            padding-right:10px;
+            max-height:86%;
+            overflow:hidden scroll
+          }
+          
+          div.container, div.toc {
+            margin-left:20%;
+            margin-right:5%;
+          }
+          
+          div.container {
+            margin-top:50px;
+            margin-bottom:50px;
+            background-color:#fff;
+            border-color:orange;
+            border-style:solid;
+            border-radius:15px;
+            padding:10px;
+          }
+          
+          div.container {
+            margin-left:20%;
+            margin-right:20%;
+            padding-top:20px;
+            padding-bottom:27px;
+          }
+          
+        </style>
+        <link rel="icon" href="./favicon.png">
+        <meta property="og:title" content="Markdown online">
+        <meta property="og:description" content="View the content of Markdown online online using Antonio's website, thanks prof!">
+        <meta property="og:image:url" content="./favicon.png">
+        <link rel="stylesheet" href="./libraries/markdown/github-markdown.css">
+
+        <script src="./libraries/highlight/highlight.min.js"></script>
+        <script src="./libraries/purify.min.js"></script>
+        <script src="./libraries/markdown/marked.min.js"></script>
+    </head>
+    <body style="background-color: #eeeeee;">
+        <div class="container markdown-body">
+
+        </div>
+        <script src="./main.js"></script>
+    </body>
+</html>
