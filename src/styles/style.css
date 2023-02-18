@@ -23,14 +23,9 @@ div.container {
     border-color:orange;
     border-style:solid;
     border-radius:15px;
-    padding:10px;
-}
-  
-div.container {
+    padding:0 10px 0 10px;
     margin-left:20%;
     margin-right:20%;
-    padding-top:20px;
-    padding-bottom:27px;
 }
 
 .cblock {
