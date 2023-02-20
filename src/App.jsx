@@ -1,133 +1,70 @@
 import './styles/style.css';
 import './libraries/highlight/styles/stackoverflow-light.min.css';
 import './styles/app.css';
-//import './styles/github-markdown.css';
-/*import './styles/base.scss'
-import './styles/app.scss';
-import './styles/fonts.scss';*/
 
 import purify from 'dompurify';
 import hljs from 'highlight.js';
 import base64 from 'base-64';
 import utf8 from 'utf8';
+import fetc from "./Fetch";
 
 import { marked } from 'marked';
-//import { Helmet } from 'react-helmet';
+import { useState } from 'react';
 
 function App() {
 
   // Getting the query
   var parsed = false;
-  var md = `
+  var website = false;
+  var [md, setMD] = useState("");
+
+  var query =  new URLSearchParams(document.location.search);
+  if (md === "" && query.has("text")) {
+    parsed = true;
+    setMD(utf8.decode(base64.decode(query.get("text"))));
+  }
+  if (md === "" && !parsed && query.has("url")) {
+    parsed = true;
+    website = true;
+    try {
+      fetc(query, setMD);
+      
+    } catch(_) {
+      
+    }
+  }
+
+  if (md === "" && parsed && website) {
+    setMD(`
+# Error on loading the URL
+Can't get the MD file from **${query.get("url")}**.
+
+
+### What went wrong?
+This could be the resoult of a **CORS** error or a **404**.
+
+Click **COMMAND/CTRL** + **ALT** + **F4** (or **F12**) and open the console for more informations.
+    `);
+  }
+
+  if (md === "" && !parsed) {
+    setMD(`
 # MDParser
 This is **MDParser**. A tool that you can use for building Markdown page by a Base64 text!
 ### How does this work?
 Here's how it works:
 
 * First off, you want to write your MD document in a Base64 formatter like [this](https://amp.base64encode.org/) one.
-* After you write your document and converted it into a Base64 text, go to \`/?text=(md-in-base64)\` replacing the \`(text)\` with your Base64 document.
+* After you write your document and converted it into a Base64 text, go to \`/?text=(md-in-base64)\` replacing the \`(md-in-base64)\` with your Base64 document.
 And that's all!
 
 (This doesn't actually support TOC at the moment.)
 ## Thank you.
-I'll upgrade this tool so it'll be flexible and fun to use, but for now thank you for using it! 😀`;
+I'll upgrade this tool so it'll be flexible and fun to use, but for now thank you for using it! 😀`
+);
 
-  var query =  new URLSearchParams(document.location.search);
-  if (query.has("text")) {
-    parsed = true;
-    md = utf8.decode(base64.decode(query.get("text"), "utf8"));
   }
-  if (!parsed) {
-    // Build other getters like file fetcher, ect.
-  }
-/*  var md = `
-# MDParser
-**MDParser** is a tool writted in \`JavaScript\` for browser-rendering \`MarkDown\`.
-\`\`\`JSON
-{
-  "test": 12,
-  "ohno": "Leo potato"
-}
-\`\`\`
-\`\`\`JS
-function test(owo) {
-  console.log(\`This is owo: \${owo}\` + " and I say hi to you!");
-}
-\`\`\`
-**__owo__** [Test](#hello)
-Nya
 
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-
-## Hello!
-ewe
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-Nya
-
-`;*/
 
   marked.setOptions({
     renderer: new marked.Renderer(),
@@ -135,8 +72,7 @@ Nya
     highlight: (code, lang) => {
       lang = hljs.getLanguage(lang) ? lang : "plaintext";
       return hljs.highlight(code, {language:lang}).value;
-    },
-    extra: true
+    }
   });
 
   /* Footnote extension made by jun-sheaf at https://github.com/markedjs/marked/issues/1562#issuecomment-643171344 */
