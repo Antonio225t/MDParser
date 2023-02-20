@@ -41,7 +41,7 @@ Can't get the MD file from **${query.get("url")}**.
 
 
 ### What went wrong?
-This could be the resoult of a **CORS** error or a **404**.
+This could be the result of a **CORS** error or a **404**.
 
 Click **COMMAND/CTRL** + **ALT** + **F4** (or **F12**) and open the console for more informations.
     `);
