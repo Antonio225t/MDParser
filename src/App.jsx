@@ -4,9 +4,10 @@ import './styles/app.css';
 
 import purify from 'dompurify';
 import hljs from 'highlight.js';
-import base64 from 'base-64';
-import utf8 from 'utf8';
-import fetc from "./Fetch";
+
+import fetc from './Fetch';
+import Constants from './Constants';
+import base64 from './base64';
 
 import { marked } from 'marked';
 import { useState } from 'react';
@@ -16,12 +17,13 @@ function App() {
   // Getting the query
   var parsed = false;
   var website = false;
+
   var [md, setMD] = useState("");
 
   var query =  new URLSearchParams(document.location.search);
   if (md === "" && query.has("text")) {
     parsed = true;
-    setMD(utf8.decode(base64.decode(query.get("text"))));
+    setMD(base64.decode(query.get("text")));
   }
   if (md === "" && !parsed && query.has("url")) {
     parsed = true;
@@ -33,35 +35,51 @@ function App() {
       
     }
   }
+  if (md === "" && !parsed && query.has("mdoc")) {
+    if (query.get("mdoc").startsWith("http://") || query.get("mdoc").startsWith("https://")) {
+      var mdoc = {};
+      var setIndex = false;
+      var observer = new Proxy(mdoc, {
+        set: (target, prop, value) => {
+          if (prop === "index" && !setIndex) {
+            setIndex = true;
+            target[prop] = value;
+
+            query.set("mdoc", base64.encode(JSON.stringify(mdoc)));
+            window.location.href = window.location.href.split("?")[0] + "?" + query.toString();
+          } else {
+            target[prop] = value;
+          }
+        }
+      });
+      
+      window.mdoc = observer;
+
+      var script = document.createElement("SCRIPT");
+      script.src = query.get("mdoc");
+
+      document.body.appendChild(script);
+    } else {
+      parsed = true;
+      window.page = query.has("mdocPage") ? query.get("mdocPage") : "index";
+      window.mdoc = JSON.parse(base64.decode(query.get("mdoc")));
+      var amd = window.mdoc[window.page];
+
+      try {
+        amd = base64.decode(amd);
+      } catch(_) {}
+
+      setMD(amd);
+      
+    }
+  }
 
   if (md === "" && parsed && website) {
-    setMD(`
-# Error on loading the URL
-Can't get the MD file from **${query.get("url")}**.
-
-
-### What went wrong?
-This could be the result of a **CORS** error or a **404**.
-
-Click **COMMAND/CTRL** + **ALT** + **F4** (or **F12**) and open the console for more informations.
-    `);
+    setMD(Constants.httpError(query.get("url")));
   }
 
   if (md === "" && !parsed) {
-    setMD(`
-# MDParser
-This is **MDParser**. A tool that you can use for building Markdown page by a Base64 text!
-### How does this work?
-Here's how it works:
-
-* First off, you want to write your MD document in a Base64 formatter like [this](https://amp.base64encode.org/) one.
-* After you write your document and converted it into a Base64 text, go to \`/?text=(md-in-base64)\` replacing the \`(md-in-base64)\` with your Base64 document.
-And that's all!
-
-(This doesn't actually support TOC at the moment.)
-## Thank you.
-I'll upgrade this tool so it'll be flexible and fun to use, but for now thank you for using it! 😀`
-);
+    setMD(Constants.defaultText);
 
   }
 
@@ -132,6 +150,33 @@ I'll upgrade this tool so it'll be flexible and fun to use, but for now thank yo
         renderer(token) {
           return `<u>${this.parser.parseInline(token.text, null)}</u>`;
         },
+      }
+    ]
+  });
+
+  marked.use({
+    extensions: [
+      {
+        name: "mdoclink",
+        level: "inline",
+        start(src) {
+          return src.match(/\[(.*)\]\(mdoc:\/\/(.*)\)/)?.index;
+        },
+        tokenizer(src) {
+          var match = src.match(/^\[(.*)\]\(mdoc:\/\/(.*)\)/);
+          if (match) {
+            return {
+              type: "mdoclink",
+              raw: match[0],
+              text: this.lexer.inlineTokens(match[1].trim(), []),
+              doc: match[2].trim()
+            };
+          }
+        },
+        renderer(token) {
+          query.set("mdocPage", token.doc);
+          return `<a href="${window.location.href.split("?")[0] + "?" + query.toString()}">${this.parser.parseInline(token.text, null)}</a>`
+        }
       }
     ]
   });
