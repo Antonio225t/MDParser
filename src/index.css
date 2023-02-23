@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.noMdoc {
+  color: hsl(0, 100%, 50%);
+  text-decoration: underline;
+}

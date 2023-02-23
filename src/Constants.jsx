@@ -22,7 +22,8 @@ And that's all!
 
 (This doesn't actually support TOC at the moment.)
 ## Thank you.
-I'll upgrade this tool so it'll be flexible and fun to use, but for now thank you for using it! 😀`
+I'll upgrade this tool so it'll be flexible and fun to use, but for now thank you for using it! 😀`,
+    noMdoc: "Can't find the doc!"
 };
 
 export default exp;

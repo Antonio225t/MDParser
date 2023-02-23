@@ -175,7 +175,7 @@ function App() {
         },
         renderer(token) {
           query.set("mdocPage", token.doc);
-          return `<a href="${window.location.href.split("?")[0] + "?" + query.toString()}">${this.parser.parseInline(token.text, null)}</a>`
+          return query.has("mdoc") && window.mdoc[token.doc] ? `<a href="${window.location.href.split("?")[0] + "?" + query.toString()}">${this.parser.parseInline(token.text, null)}</a>` : `<span class="noMdoc" title="${Constants.noMdoc}">${this.parser.parseInline(token.text, null)}</span>`;
         }
       }
     ]
