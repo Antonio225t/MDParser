@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/MDParser/static/css/main.d53693cb.css",
-    "main.js": "/MDParser/static/js/main.53df0c89.js",
+    "main.js": "/MDParser/static/js/main.7c3f17b1.js",
     "static/js/787.1911882d.chunk.js": "/MDParser/static/js/787.1911882d.chunk.js",
     "static/media/lato-normal-italic.f28f2d6.woff": "/MDParser/static/media/lato-normal-italic.f28f2d6.62a9c838c99d073c7ba6.woff",
     "static/media/lato-black-italic.798eafd.woff": "/MDParser/static/media/lato-black-italic.798eafd.0d0882bc6997a213dace.woff",
@@ -71,11 +71,11 @@
     "static/media/KaTeX_Size3-Regular.2c2f0ef.woff2": "/MDParser/static/media/KaTeX_Size3-Regular.2c2f0ef.5cce6e91e556438f05bc.woff2",
     "index.html": "/MDParser/index.html",
     "main.d53693cb.css.map": "/MDParser/static/css/main.d53693cb.css.map",
-    "main.53df0c89.js.map": "/MDParser/static/js/main.53df0c89.js.map",
+    "main.7c3f17b1.js.map": "/MDParser/static/js/main.7c3f17b1.js.map",
     "787.1911882d.chunk.js.map": "/MDParser/static/js/787.1911882d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d53693cb.css",
-    "static/js/main.53df0c89.js"
+    "static/js/main.7c3f17b1.js"
   ]
 }
