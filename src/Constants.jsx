@@ -21,6 +21,31 @@ Here's how it works:
 And that's all!
 
 (This doesn't actually support TOC at the moment.)
+### What is an MDoc?
+An **MDoc** is a \`JavaScript\` file loading __MarkDown__ (in **base64** or not). An MDoc can be built by creating a file like this:
+
+\`MDoc test.mdoc\`:
+\`\`\`JavaScript
+window.mdoc["index"] = \`
+# This is what an MDoc looks like!
+This is the start text.\`; // IMPORTANT: The "index" is the property that has to be set at the end of the file!
+\`\`\`
+Mdocs can have **multiple pages** that can be linked like this:
+
+\`MDoc multiple pages.mdoc\`:
+\`\`\`JavaScript
+window.mdoc["page"] = \`
+# This is an optional page.
+If you want to get back at the **index**, you can go [here](mdoc://index)!\`;
+
+window.mdoc["index"] = \`
+# Index
+This page contains:
+* [another page](mdoc://page)
+
+Thank you!\`; // Index is always set at the end of the file.
+\`\`\`
+So as you can see, \`mdoc://(property)\` is the text that links the text to the actual __MDocs page__. The \`(property)\` must be the same as the one in \`window.mdoc[(property)]\`. Remember to set the \`index\` value at the end of the file because setting it starts the process to render it.
 ## Thank you.
 I'll upgrade this tool so it'll be flexible and fun to use, but for now thank you for using it! 😀`,
     noMdoc: "Can't find the doc!",
