@@ -23,7 +23,7 @@
   "scripts": {
     "start": "react-scripts start",
     "deploy": "gh-pages -d build",
-    "build": "react-scripts build",
+    "build": "react-scripts build && @echo off && echo Renaming index.html to 404.html && ren build\\index.html 404.html",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
