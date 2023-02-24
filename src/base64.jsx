@@ -6,11 +6,9 @@ function encode(text) {
 }
 
 function decode(btext) {
-    console.log(btext)
-    console.log(decodeURI(btext))
     return utf8.decode(base64.decode(decodeURI(btext)));
 }
 
-const exp = { encode, decode }
+const exp = { encode, decode };
 
 export default exp;

@@ -15,17 +15,27 @@ div.container, div.toc {
     margin-left:20%;
     margin-right:5%;
 }
-  
-div#root > div.container {
-    margin-top:50px;
-    margin-bottom:50px;
+
+div.editorContainer > div.container, textarea.textEditor {
+    min-width: 30%;
+    min-height: 40%;
     background-color:#fff;
     border-color:orange;
     border-style:solid;
     border-radius:15px;
     padding:0 10px 0 10px;
-    margin-left:20%;
-    margin-right:20%;
+    margin: 0;
+}
+
+div.editorContainer {
+    display: flex;
+    flex-direction: row;
+    column-gap: 5%;
+    justify-content: center;
+    align-items: center normal;
+
+
+    margin: 50px 5%;
 }
 
 .cblock {
