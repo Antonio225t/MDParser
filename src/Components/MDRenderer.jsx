@@ -60,10 +60,10 @@ function MDRenderer({ md, extensions, query }) {
             name: "underline",
             level: "inline",
             start: (src) => {
-              return src.match(/__(.*?)__/)?.index;
+              return src.match(/__([^_]*?[^_]*?)__/)?.index;
             },
             tokenizer(src, tokens) {
-              var match = src.match(/^__(.*?)__/);
+              var match = src.match(/^__([^_]*?[^_]*?)__/);
               if (match) {
                 var token = {
                   type: "underline",
@@ -86,10 +86,10 @@ function MDRenderer({ md, extensions, query }) {
             name: "mdoclink",
             level: "inline",
             start(src) {
-              return src.match(/\[(.*)\]\(mdoc:\/\/(.*)\)/)?.index;
+              return src.match(/\[([^\]]*)\]\(mdoc:\/\/([^)]*)\)/)?.index;
             },
             tokenizer(src) {
-              var match = src.match(/^\[(.*)\]\(mdoc:\/\/(.*)\)/);
+              var match = src.match(/^\[([^\]]*)\]\(mdoc:\/\/([^)]*)\)/);
               if (match) {
                 return {
                   type: "mdoclink",
