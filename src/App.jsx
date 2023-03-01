@@ -29,10 +29,7 @@ function App() {
     website = true;
     try {
       fetc(query, setMD);
-      
-    } catch(_) {
-      
-    }
+    } catch(_) {}
   }
 
   // MDocuments support.
@@ -83,7 +80,7 @@ function App() {
 
 
   return (
-    <MDRenderer md={md} query={query} />
+    <MDRenderer md={md} query={query} extensions={query.has("extensions") ? base64.decode(query.get("extensions")) : []} />
   );
 }
 

@@ -29,18 +29,18 @@ function App() {
             <div className="editorButtons">
                 <FancyButton text={"Copy as URL"} icon={copyURLIcon} tooltip={"Copy the text as URL (not editor) in the clipboard"} onClick={()=>{
                     var url = window.location.href.split("?")[0];
-                    url = url.split("/").splice(0, url.split("/").length-1).join("/") + "?text=" + query.get("text");
+                    url = url.split("/").splice(0, url.split("/").length-1).join("/") + "?text=" + query.get("text") + (query.has("extensions") ? "&extensions=" + query.get("extensions") : "");
 
                     navigator.clipboard.writeText(url);
                 }} />
                 <FancyButton text={"Copy as Text"} icon={copyTextIcon} tooltip={"Copy the text as just MarkDown text"} onClick={()=>{
                     navigator.clipboard.writeText(md);
                 }} />
-                <FancyButton text={"Copy as Base64"} icon={copyBase64Icon} tooltip={"Copy the text as Base64 URL-safe encoded text"} onClick={()=>{
+                <FancyButton text={"Copy Text as Base64"} icon={copyBase64Icon} tooltip={"Copy the text as Base64 URL-safe encoded text"} onClick={()=>{
                     navigator.clipboard.writeText(query.get("text"));
                 }} />
-                <FancyButton text={"Copy as Base64"} icon={copyBase64Icon} tooltip={"Copy the text as Base64 URL-safe encoded text"} onClick={()=>{
-                    navigator.clipboard.writeText(query.get("text"));
+                <FancyButton text={"Copy Extensions as Base64"} icon={copyBase64Icon} tooltip={"Copy extensions as Base64 URL-safe encoded text"} onClick={()=>{
+                    navigator.clipboard.writeText(query.get("extensions"));
                 }} />
                 {!viewExtsEditor ? (
                     <FancyButton text={"Edit Extensions"} icon={editExtensionsIcon} tooltip={"View the editor of extensions, documentation on Marked."} onClick={()=>{
