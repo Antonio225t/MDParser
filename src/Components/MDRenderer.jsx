@@ -10,6 +10,13 @@ function MDRenderer({ md, extensions, query }) {
 
     md = md !== "" ? md : Constants.defaultText;
 
+    try {
+      // eslint-disable-next-line
+      extensions = eval(extensions); // Using "eval()" is never safe but must to in order to build functions properly.
+    } catch(_) {
+      extensions = [];
+    }
+
     marked.setOptions({
         renderer: new marked.Renderer(),
         langPrefix: "hljs cblock language-",
@@ -106,6 +113,10 @@ function MDRenderer({ md, extensions, query }) {
           }
         ]
       });
+
+      try {
+        marked.use({extensions: extensions});
+      } catch(_) {}
 
     return (
         <div className="container markdown-body" dangerouslySetInnerHTML={{__html: purify.sanitize(marked.parse(md))}} />

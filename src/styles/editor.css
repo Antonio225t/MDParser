@@ -41,3 +41,50 @@ div.editorContainer {
 .cblock {
     border-radius: 1.5px;
 }
+
+
+/* FancyButtons CSS */
+
+.editorButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    column-gap: 7px;
+
+    padding: 15px;
+}
+
+.nyabutton {
+    border-radius: 3px;
+    border-style: solid;
+    border-color: hsl(180, 32%, 85%);
+    background-color: hsl(180, 81%, 85%);
+    width: fit-content;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    column-gap: 6px;
+
+    text-align: center;
+    user-select: none;
+    padding: 3px;
+}
+
+.nyabutton:hover {
+    background-color: hsl(180, 81%, 74%);
+    cursor: pointer;
+}
+
+.nyabutton:active {
+    background-color: hsl(180, 81%, 54%);
+    cursor: pointer;
+}
+
+.nyabutton > img {
+    width: 1.3em;
+    height: auto;
+    vertical-align: middle;
+}
