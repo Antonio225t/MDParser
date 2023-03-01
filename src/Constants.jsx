@@ -54,7 +54,31 @@ I'll upgrade this tool so it'll be flexible and fun to use, but for now thank yo
 You can type here and your text appears in \`Markdown\` [here](on_the_right)!`,
     on_the_right: `
 # on_the_right
-Yes, the parsed text will appear on this box! Go back in the [editor](editor) and check it out yourself!`
+Yes, the parsed text will appear on this box! Go back in the [editor](editor) and check it out yourself!`,
+    defaultExtension: `
+    [
+        {
+          name: "underline",
+          level: "inline",
+          start: (src) => {
+            return src.match(/__([^_]*?[^_]*?)__/)?.index;
+          },
+          tokenizer(src, tokens) {
+            var match = src.match(/^__([^_]*?[^_]*?)__/);
+            if (match) {
+              var token = {
+                type: "underline",
+                raw: match[0],
+                text: this.lexer.inlineTokens(match[1].trim(), [])
+              };
+              return token;
+            }
+          },
+          renderer(token) {
+            return \`<u>\${this.parser.parseInline(token.text, null)}</u>\`;
+          },
+        }
+      ]`
 };
 
 export default exp;

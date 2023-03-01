@@ -114,12 +114,18 @@ function MDRenderer({ md, extensions, query }) {
         ]
       });
 
+      var text = purify.sanitize(marked.parse(md));
+
       try {
         marked.use({extensions: extensions});
       } catch(_) {}
 
+      try {
+        text = purify.sanitize(marked.parse(md));
+      } catch(_) {}
+
     return (
-        <div className="container markdown-body" dangerouslySetInnerHTML={{__html: purify.sanitize(marked.parse(md))}} />
+        <div className="container markdown-body" dangerouslySetInnerHTML={{__html: text}} />
     );
 }
 

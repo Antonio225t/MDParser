@@ -18,7 +18,7 @@ import { useState } from 'react';
 function App() {
     var query = new URLSearchParams(window.location.search);
     var [md, setMD] = useState(query.has("text") ? base64.decode(query.get("text")) : Constants.defaultEdit);
-    var [exts, setExts] = useState(query.has("extensions") ? base64.decode(query.get("extensions")) : []);
+    var [exts, setExts] = useState(query.has("extensions") ? base64.decode(query.get("extensions")) : Constants.defaultExtension);
     var [viewExtsEditor, setViewExtsEditor] = useState(false);
 
     query.set("text", base64.encode(md))
@@ -48,7 +48,7 @@ function App() {
                     }} />
                 ) : (
                     <FancyButton text={"Edit MarkDown"} icon={editMDIcon} tooltip={"View the editor of MarkDown."} onClick={()=>{
-                        setViewExtsEditor(!viewExtsEditor); // TODO: Make the editorContainer and editorExtension switch (also create the editorExtension wich will be a sorta of textarea with hljs).
+                        setViewExtsEditor(!viewExtsEditor);
                     }} />
                 )}
             </div>
