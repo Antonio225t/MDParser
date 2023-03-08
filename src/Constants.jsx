@@ -10,7 +10,7 @@ This could be the result of a **CORS** error or a **404**.
 
 Click **COMMAND/CTRL** + **ALT** + **F4** (or **F12**) and open the console for more informations.`
     },
-    defaultText: `
+    defaultText: `{btn "Open Editor" "" "Click to open the editor" "window.location.href += "/editor""}
 # MDParser
 This is **MDParser**. A tool that you can use for building Markdown page by a Base64 text!
 ### How does this work?

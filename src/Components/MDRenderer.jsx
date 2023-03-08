@@ -7,7 +7,6 @@ import { marked } from 'marked';
 
 
 function MDRenderer({ md, extensions, query }) {
-
     md = md !== "" ? md : Constants.defaultText;
 
     try {
@@ -107,8 +106,23 @@ function MDRenderer({ md, extensions, query }) {
               }
             },
             renderer(token) {
-              query.set("mdocPage", token.doc);
-              return query.has("mdoc") && window.mdoc[token.doc] ? `<a href="${window.location.href.split("?")[0] + "?" + query.toString()}">${this.parser.parseInline(token.text, null)}</a>` : `<span class="noMdoc" title="${Constants.noMdoc}">${this.parser.parseInline(token.text, null)}</span>`;
+              var id = "mdoclinking-" + Math.random()*9999;
+              var interval = setInterval(()=>{
+                if (document.getElementById(id)) {
+
+                  document.getElementById(id).onclick = () => {
+                    query.set("mdocPage", token.doc);
+                    window.history.pushState(void 0, "", window.location.href.split("?")[0] + "?" + query.toString());
+                    try {
+                      window.mdocPage['page'] = token.doc;
+                    } catch(_) {}
+                  };
+
+                  document.getElementById(id).removeAttribute("id");
+                  clearInterval(interval);
+                }
+              }, 10);
+              return query.has("mdoc") && window.mdoc[token.doc] ? `<span id="${id}" class="mdoclink">${this.parser.parseInline(token.text, null)}</span>` : `<span class="noMdoc" title="${Constants.noMdoc}">${this.parser.parseInline(token.text, null)}</span>`;
             }
           }
         ]

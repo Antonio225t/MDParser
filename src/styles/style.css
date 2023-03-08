@@ -15,9 +15,9 @@ div.container, div.toc {
     margin-left:20%;
     margin-right:5%;
 }
-  
+
 div#root > div.container {
-    margin-top:50px;
+    margin-top:25px;
     margin-bottom:50px;
     background-color:#fff;
     border-color:orange;
@@ -28,6 +28,21 @@ div#root > div.container {
     margin-right:20%;
 }
 
+div#root > div.container:first-child {
+    margin-top:50px;
+}
+
 .cblock {
     border-radius: 1.5px;
+}
+
+a, .mdoclink {
+    color: #0c93e4;
+    text-decoration: underline;
+    text-decoration-skip-ink: ink
+}
+
+a:focus,a:hover, .mdoclink:focus,.mdoclink:hover {
+    text-decoration: none;
+    cursor: pointer;
 }

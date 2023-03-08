@@ -5,6 +5,8 @@ import copyURLIcon from '../../Copy URL.png';
 import copyBase64Icon from '../../Copy Base64.png';
 import editExtensionsIcon from '../../Edit Extensions.png';
 import editMDIcon from '../../Edit MD.png';
+import downloadMD64Icon from '../../Download .md64.png';
+import backIcon from '../../Back.png';
 
 import MDRenderer from '../../Components/MDRenderer';
 import FancyButton from '../../Components/FancyButton';
@@ -27,6 +29,24 @@ function App() {
     return (
         <>
             <div className="editorButtons">
+                <FancyButton text={"Back"} icon={backIcon} tooltip={"Go back to the MDParser default's MD"} onClick={()=>{
+                    window.location.href = window.location.href.split("?")[0].replace("/editor", "");
+                }} />
+                <FancyButton text={"Download as .MD64 file"} icon={downloadMD64Icon} tooltip={"Download the file as .md64 extension for loading it with '?url=<link_to_file.md64>'."} onClick={()=>{
+                    var fileName = window.prompt("Give a name to your file here:");
+                    var downloadable = document.createElement("A");
+
+                    var file = ``;
+                    if (exts !== Constants.defaultExtension) {
+                        file += `window.urlPage["extensions"] = \`${exts.replace(/`/g, "\\`").replace(/\$/g, "\\$")}\`;\n\n`;
+                    }
+                    file += `window.urlPage["md"] = \`${md.replace(/`/g, "\\`").replace(/\$/g, "\\$")}\`;`;
+
+                    downloadable.href = `data:application/octet-stream;base64,` + base64.encode(file);
+                    downloadable.download = fileName + ".md64";
+
+                    downloadable.click();
+                }} />
                 <FancyButton text={"Copy as URL"} icon={copyURLIcon} tooltip={"Copy the text as URL (not editor) in the clipboard"} onClick={()=>{
                     var url = window.location.href.split("?")[0];
                     url = url.split("/").splice(0, url.split("/").length-1).join("/") + "?text=" + query.get("text") + (query.has("extensions") ? "&extensions=" + query.get("extensions") : "");
