@@ -10,42 +10,32 @@ This could be the result of a **CORS** error or a **404**.
 
 Click **COMMAND/CTRL** + **ALT** + **F4** (or **F12**) and open the console for more informations.`
     },
-    defaultText: `{btn "Open Editor" "" "Click to open the editor" "window.location.href += "/editor""}
+    defaultText: `{btn "Open Editor" "https://raw.githubusercontent.com/Antonio225t/MDParser/main/src/Editor.png" "Click to open the editor" "window.location.href += "/editor""}
 # MDParser
 This is **MDParser**. A tool that you can use for building Markdown page by a Base64 text!
-### How does this work?
-Here's how it works:
-
-* First off, you want to write your MD document encoded in base64, you can use the [editor](editor) or a Base64 encoder like [this](https://amp.base64encode.org/) one.
-* After you write your document and converted it into a Base64 text, go to \`/?text=(md-in-base64)\` replacing the \`(md-in-base64)\` with your Base64 document.
-And that's all!
 
 (This doesn't actually support TOC at the moment.)
+## How does this work?
+**For starters:** You can hop in the [editor](editor) and try it by typing **MarkDown**, then hover on the buttons for more information about them and you're good to go.
+
+**For pros:** There are several ways to work with this tool, it just needs some \`query parameters\` __note that none of this are required, they are all optional__:
+* \`?text=<base64 text>\` - **Base64 encoded** string containing **MarkDown**.
+* \`?extensions=<base64 extension list>\` - Custom [Marked extensions](https://marked.js.org/using_pro#extensions) as list **Base64 encoded**.
+* \`?url=<url to file.md64>\` - It loads a **MarkDown64** file (**it is __NOT__ a MarkDown file!!!**).
+* \`?mdoc=<url to file.mdoc>\` - It loads a **Markdown Document** file, usefull for more pages than one.
+
+If you want, you can convert plain text into Base64 using [this](https://amp.base64encode.org/) website.
+
+## In depth
+### What is an MD64 file?
+A **MarkDown64** file is a \`JavaScript\` code containing **MarkDown** that will be loaded in the website with the \`url\` query parameter.
+
+**MarkDown64** file can start with \`window.urlPage["md"]\` wich contains the **MarkDown** string, or it can start with \`window.urlPage["extensions"]\` wich includes custom extensions (__note that it **MUST** end with__ \`window.urlPage["md"]\` __bcause this starts the rendering script!__).
+
 ### What is an MDoc?
-An **MDoc** is a \`JavaScript\` file loading __MarkDown__ (in **base64** or not). An MDoc can be built by creating a file like this:
+A **MarkDown Document** is a \`JavaScript\` file containing some **MarkDown** pages.
 
-\`MDoc test.mdoc\`:
-\`\`\`JavaScript
-window.mdoc["index"] = \`
-# This is what an MDoc looks like!
-This is the start text.\`; // IMPORTANT: The "index" is the property that has to be set at the end of the file!
-\`\`\`
-Mdocs can have **multiple pages** that can be linked like this:
-
-\`MDoc multiple pages.mdoc\`:
-\`\`\`JavaScript
-window.mdoc["page"] = \`
-# This is an optional page.
-If you want to get back at the **index**, you can go [here](mdoc://index)!\`;
-
-window.mdoc["index"] = \`
-# Index
-This page contains:
-* [another page](mdoc://page)
-
-Thank you!\`; // Index is always set at the end of the file.
-\`\`\`
-So as you can see, \`mdoc://(property)\` is the text that links the text to the actual __MDocs page__. The \`(property)\` must be the same as the one in \`window.mdoc[(property)]\`. Remember to set the \`index\` value at the end of the file because setting it starts the process to render it.
+You can declare pages with \`window.mdoc["pagename"]\` and you can redirect users to it in other **MarkDown** pages with \`[page](mdoc://pagename)\`. To start all the script declare the \`index\` page with \`window.mdoc["index"]\` (__note that this **MUST** be the last page declared because it will start the rendering script!__).
 ## Thank you.
 I'll upgrade this tool so it'll be flexible and fun to use, but for now thank you for using it! 😀`,
     noMdoc: "Can't find the doc!",
