@@ -10,11 +10,10 @@ This could be the result of a **CORS** error or a **404**.
 
 Click **COMMAND/CTRL** + **ALT** + **F4** (or **F12**) and open the console for more informations.`
     },
-    defaultText: `{btn "Open Editor" "https://raw.githubusercontent.com/Antonio225t/MDParser/main/src/Editor.png" "Click to open the editor" "if (window.location.href.endsWith("/")) {window.location.href += "editor" } else {window.location.href += "/editor" } "}
+    defaultText: `{btn "Open Editor" "https://raw.githubusercontent.com/Antonio225t/MDParser/main/src/Editor.png" "Click to open the editor" "if (window.location.href.endsWith("/")) {window.location.href = window.location.href.split("?")[0].split("#")[0] + "editor";} else {window.location.href = window.location.href.split("?")[0].split("#")[0] + "/editor";} "}
+[TOC]
 # MDParser
 This is **MDParser**. A tool that you can use for building Markdown page by a Base64 text!
-
-(This doesn't actually support TOC at the moment.)
 ## How does this work?
 **For starters:** You can hop in the [editor](editor) and try it by typing **MarkDown**, then hover on the buttons for more information about them and you're good to go.
 

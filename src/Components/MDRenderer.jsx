@@ -1,5 +1,6 @@
 import purify from 'dompurify';
 import hljs from 'highlight.js';
+import toc from '../libraries/markdown-toc-unlazy';
 
 import Constants from '../Constants';
 
@@ -8,6 +9,7 @@ import { marked } from 'marked';
 
 function MDRenderer({ md, extensions, query }) {
     md = md !== "" ? md : Constants.defaultText;
+    var onPhone = Constants.phonePattern.test(window.navigator.userAgent);
 
     try {
       // eslint-disable-next-line
@@ -86,6 +88,8 @@ function MDRenderer({ md, extensions, query }) {
         ]
       });
     
+      var tocUsed = false;
+
       marked.use({
         extensions: [
           {
@@ -123,6 +127,86 @@ function MDRenderer({ md, extensions, query }) {
                 }
               }, 10);
               return query.has("mdoc") && window.mdoc[token.doc] ? `<span id="${id}" class="mdoclink">${this.parser.parseInline(token.text, null)}</span>` : `<span class="noMdoc" title="${Constants.noMdoc}">${this.parser.parseInline(token.text, null)}</span>`;
+            }
+          },
+          {
+            name: "tocbuild",
+            level:"inline",
+            start(src) {
+              return src.match(/\[TOC\]/)?.index;
+            },
+            tokenizer(src) {
+              var match = src.match(/^\[TOC\]/);
+              if (match) {
+                if (!tocUsed) {
+                  tocUsed = true;
+                  return {
+                    type: "tocbuild",
+                    raw: match[0],
+                    mode: "side"
+                  }
+                } else {
+                  return {
+                    type: "text",
+                    raw: match[0]
+                  }
+                }
+              }
+            },
+            renderer(token) {
+              if (onPhone) {
+                var id = "tocbuild-" + Math.random()*9999;
+                var interval = setInterval(()=>{
+
+                  if (document.getElementById(id)) {
+                    var elem = document.getElementById(id);
+                    elem.parentElement.innerHTML += `<div id="@TOC"></div>`;
+
+                    var tocView = document.getElementById("@TOC");
+                    elem = document.getElementById(id);
+
+                    elem.removeAttribute("id");
+                    clearInterval(interval);
+
+                    var show = false;
+                    var tocV = marked.parse(toc(md).content);
+
+                    elem.onclick = () => {
+                      if (!show) {
+                        show = !show;
+                        elem.style = "display: none;";
+
+                        tocView.innerHTML = `
+                          <div class="phoneButtonsOverlay">
+                            <div class="toContainer">
+                              <div class="toc">
+                                ${tocV}
+                              </div>
+                            </div>
+                          </div>
+                        `;
+                      } else {
+                        show = !show;
+                        elem.removeAttribute("style");
+
+                        document.getElementById("@TOC").innerHTML = "";
+                      }
+                    };
+
+                    tocView.onclick = () => {
+                      if (show) {
+                        show = !show;
+                        elem.removeAttribute("style");
+
+                        document.getElementById("@TOC").innerHTML = "";
+                      }
+                    };
+                  }
+
+                }, 10);
+                return `<div class="phoneShowBtnsButton phoneTOCbtn" id="${id}">#</div>`;
+              }
+              return `<div class="toc side">${marked.parse(toc(md).content)}</div>`;
             }
           }
         ]

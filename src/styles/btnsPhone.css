@@ -49,6 +49,17 @@
     right: 10%;
 }
 
+.phoneShowBtnsButton.phoneTOCbtn {
+    left: 65%;
+    right: 25%;
+
+    height: 1.9rem;
+
+    font-size: 17px;
+
+    box-shadow: 0px 0px 3px;
+}
+
 .phoneBtnsIcon {
     position: inherit;
 
@@ -102,4 +113,16 @@
     margin-top: 5%;
     margin-left: 85%;
     margin-bottom: 1.5%;
+}
+
+
+.toContainer > .toc {
+    position: fixed;
+    margin: 0;
+
+    top: 4%;
+    bottom: 4%;
+
+    left: 8%;
+    right: 8%;
 }
