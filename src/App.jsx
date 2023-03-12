@@ -4,10 +4,11 @@ import './styles/app.css';
 
 import base64 from './base64';
 import Constants from './Constants'
+
 import MDRenderer from './Components/MDRenderer';
 
 import { useState } from 'react';
-import FancyButton from './Components/FancyButton';
+import ButtonForPhone from './Components/ButtonsForPhone';
 
 
 function App() {
@@ -15,6 +16,13 @@ function App() {
   // Initializing some variables.
   var parsed = false;
   var query =  new URLSearchParams(document.location.search);
+  var onPhone = Constants.phonePattern.test(window.navigator.userAgent);
+  if (onPhone) {
+    var style = document.createElement("STYLE");
+    style.innerHTML += "div#root > div.container {margin:0px;margin-top:50px;zoom:225%;}";
+    
+    document.head.appendChild(style);
+  }
 
   var [md, setMD] = useState("");
   var [exts, setExts] = useState(query.has("extensions") ? base64.decode(query.get("extensions")) : []);
@@ -140,24 +148,8 @@ function App() {
   
   return (
     <>
-      {btns.length > 0 ? (
-        <div className="editorButtons">
-          {btns.map(item=>{
-            var text = item.text;
-            var icon = item.icon;
-            var tooltip = item.tooltip;
-            var fun = item.function;
-
-            var key = Math.random()*9999
-
-            return (
-              // eslint-disable-next-line
-              <FancyButton key={key} text={text} icon={icon} tooltip={tooltip} onClick={()=>{eval(fun)}} /> // We have to eval the function...
-            )
-          })}
-      </div>
-      ) : ""}
-        <MDRenderer md={md} query={query} extensions={exts} />
+      <ButtonForPhone btns={btns} />
+      <MDRenderer md={md} query={query} extensions={exts} />
     </>
   );
 }

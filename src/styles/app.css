@@ -1539,7 +1539,7 @@ h3,h4,h5,h6 {
 h1:after,h2:after {
     content: "";
     display: block;
-    position: relative;
+    /*position: relative;*/
     top: .33em;
     border-bottom: 1px solid hsla(0,0%,50%,.33)
 }

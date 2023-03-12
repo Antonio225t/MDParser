@@ -10,7 +10,7 @@ This could be the result of a **CORS** error or a **404**.
 
 Click **COMMAND/CTRL** + **ALT** + **F4** (or **F12**) and open the console for more informations.`
     },
-    defaultText: `{btn "Open Editor" "https://raw.githubusercontent.com/Antonio225t/MDParser/main/src/Editor.png" "Click to open the editor" "window.location.href += "/editor""}
+    defaultText: `{btn "Open Editor" "https://raw.githubusercontent.com/Antonio225t/MDParser/main/src/Editor.png" "Click to open the editor" "if (window.location.href.endsWith("/")) {window.location.href += "editor" } else {window.location.href += "/editor" } "}
 # MDParser
 This is **MDParser**. A tool that you can use for building Markdown page by a Base64 text!
 
@@ -39,6 +39,7 @@ You can declare pages with \`window.mdoc["pagename"]\` and you can redirect user
 ## Thank you.
 I'll upgrade this tool so it'll be flexible and fun to use, but for now thank you for using it! 😀`,
     noMdoc: "Can't find the doc!",
+    phonePattern: /Android|iPhone|Phone/,
     defaultEdit: `
 # Hello, World!
 You can type here and your text appears in \`Markdown\` [here](on_the_right)!`,
