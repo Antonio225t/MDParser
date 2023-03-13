@@ -10,7 +10,9 @@ This could be the result of a **CORS** error or a **404**.
 
 Click **COMMAND/CTRL** + **ALT** + **F4** (or **F12**) and open the console for more informations.`
     },
-    defaultText: `{btn "Open Editor" "https://raw.githubusercontent.com/Antonio225t/MDParser/main/src/Editor.png" "Click to open the editor" "if (window.location.href.split("?")[0].split("#")[0].endsWith("/")) {window.location.href = window.location.href.split("?")[0].split("#")[0] + "editor";} else {window.location.href = window.location.href.split("?")[0].split("#")[0] + "/editor";} "}
+    defaultText: `{btn "Open Editor" "https://raw.githubusercontent.com/Antonio225t/MDParser/main/src/Editor.png" "Click to open the editor" "var link = "editor";if (window.location.href.split("?")[0].split("#")[0].endsWith("/")) {window.location.href = window.location.href.split("?")[0].split("#")[0] + link;} else {window.location.href = window.location.href.split("?")[0].split("#")[0] + "/" + link;} "}
+{btn "Open MD64" "https://raw.githubusercontent.com/Antonio225t/MDParser/main/src/Editor.png" "Click to open a .md64 file url" "var link = "?url=" + window.prompt("Input the url of the .md64 file (without '/MDParser?url=')");if (window.location.href.split("?")[0].split("#")[0].endsWith("/")) {window.location.href = window.location.href.split("?")[0].split("#")[0] + link;} else {window.location.href = window.location.href.split("?")[0].split("#")[0] + "/" + link;} "}
+{btn "Open MDOC" "https://raw.githubusercontent.com/Antonio225t/MDParser/main/src/Editor.png" "Click to open a .mdoc file url" "var link = "?mdoc=" + window.prompt("Input the url of the .mdoc file (without '/MDParser?mdoc=')");if (window.location.href.split("?")[0].split("#")[0].endsWith("/")) {window.location.href = window.location.href.split("?")[0].split("#")[0] + link;} else {window.location.href = window.location.href.split("?")[0].split("#")[0] + "/" + link;} "}
 [TOC]
 # MDParser
 This is **MDParser**. A tool that you can use for building Markdown page by a Base64 text!
