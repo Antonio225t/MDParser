@@ -133,10 +133,10 @@ function MDRenderer({ md, extensions, query }) {
             name: "tocbuild",
             level:"inline",
             start(src) {
-              return src.match(/\[TOC\]/)?.index;
+              return src.match(/\[TOC\]\s*$/)?.index;
             },
             tokenizer(src) {
-              var match = src.match(/^\[TOC\]/);
+              var match = src.match(/^\[TOC\]\s*$/);
               if (match) {
                 if (!tocUsed) {
                   tocUsed = true;
